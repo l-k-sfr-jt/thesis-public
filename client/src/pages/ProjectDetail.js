@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {
     Box,
     Breadcrumbs,
@@ -25,14 +25,14 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import GrainIcon from "@mui/icons-material/Grain";
 import InboxIcon from '@mui/icons-material/Inbox';
 import WhatshotIcon from "@mui/icons-material/Whatshot";
-import TabPanel from "../components/TabPanel";
+import TabPanel from "../../../../../thesis-public/client/src/components/TabPanel";
 import Button from "@mui/material/Button";
 import MUIRichTextEditor from "mui-rte";
 import {ContentState, convertFromHTML, convertToRaw} from "draft-js";
-import TechList from "../components/TechList";
-import TechDetailSchedule from "../components/TechDetailSchedule";
-import {TechContext} from "../hooks/TechContext";
-import SplitButton from "../components/SplitButton";
+import TechList from "../../../../../thesis-public/client/src/components/TechList";
+import TechDetailSchedule from "../../../../../thesis-public/client/src/components/TechDetailSchedule";
+import {TechContext} from "../../../../../thesis-public/client/src/hooks/TechContext";
+import SplitButton from "../../../../../thesis-public/client/src/components/SplitButton";
 import moment from "moment/moment";
 import FileDownload from "js-file-download";
 
@@ -94,7 +94,7 @@ const ProjectDetail = () => {
 
     useEffect(() => {
         const getProject = async () => {
-            const {data} = await axios.get(`/projects/list/${params.projectId}`);
+            const {data} = await axios.get(`/api/projects/list/${params.projectId}`);
             setProject(data.project);
             const blocksFromHTML = convertFromHTML(data.project.notes);
             setEditorDefault(ContentState.createFromBlockArray(
@@ -129,7 +129,7 @@ const ProjectDetail = () => {
     const updateStatus = async (status) => {
         const updatedProject = project;
         updatedProject.status = status;
-        return await axios.put(`/projects/update/${project._id}`, {project: updatedProject})
+        return await axios.put(`/api/projects/update/${project._id}`, {project: updatedProject})
             .then((response, err) => {
                 setProject(response.data.project)
             }).catch((err) => {
@@ -139,7 +139,7 @@ const ProjectDetail = () => {
     }
 
     const handleDelete = async () => {
-        return await axios.delete('/projects/delete', {data: {projectId: project._id}})
+        return await axios.delete('/api/projects/delete', {data: {projectId: project._id}})
             .then(() => {
                 navigate('/projects');
             }).catch((err) => {

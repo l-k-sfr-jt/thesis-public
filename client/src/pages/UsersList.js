@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import GrainIcon from '@mui/icons-material/Grain';
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import axios from "axios";
 import {Link, Outlet} from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -28,7 +28,7 @@ const UsersList = () => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
         const getTechnicians = async () => {
-            const {data} = await axios.get('/technicians/list');
+            const {data} = await axios.get('/api/technicians/list');
             setUsers(data.technicians);
         };
         getTechnicians();

@@ -8,7 +8,7 @@ export default function useGetUser() {
 
     useEffect(() => {
         async function findUser() {
-            await axios.get('/auth/checkUser', )
+            await axios.get('/api/auth/checkUser', )
                 .then(res => {
                     setUser(res.data.user);
                     setLoading(false);

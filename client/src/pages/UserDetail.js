@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {
     Avatar,
     Box,
@@ -31,7 +31,7 @@ import WhatshotIcon from "@mui/icons-material/Whatshot";
 import EuroIcon from '@mui/icons-material/Euro';
 import FlightClassIcon from '@mui/icons-material/FlightClass';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import TabPanel from "../components/TabPanel";
+import TabPanel from "../../../../../thesis-public/client/src/components/TabPanel";
 import {stringAvatar} from "../utils/utils";
 import Button from "@mui/material/Button";
 
@@ -53,13 +53,13 @@ const UserDetail = () => {
 
     useEffect(() => {
         const getTechnician = async () => {
-            const {data} = await axios.get(`/technicians/list/${params.technicianId}`);
+            const {data} = await axios.get(`/api/technicians/list/${params.technicianId}`);
             setProjects(data.tech.projects)
             setTech(data.tech);
         };
 
         const getOrders = async () => {
-            const {data} = await axios.get(`/orders/for/${params.technicianId}`);
+            const {data} = await axios.get(`/api/orders/for/${params.technicianId}`);
             setOrders(data.orders);
         };
 
@@ -77,7 +77,7 @@ const UserDetail = () => {
     }
 
     const handleDelete = () => {
-        axios.delete('/technicians/delete', {data: {techId: tech._id}})
+        axios.delete('/api/technicians/delete', {data: {techId: tech._id}})
             .then((data) => {
                 navigate('/technicians');
             })

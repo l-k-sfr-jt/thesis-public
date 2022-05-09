@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {EditorState} from "draft-js";
 import {
     Box,
@@ -43,7 +43,7 @@ const OfferCreate = () => {
     }
 
     const createOffer =  async (offerData) => {
-        return axios.post('/offers/create', {
+        return axios.post('/api/offers/create', {
             offerData
         }).then( () => {
             navigate('/offers');

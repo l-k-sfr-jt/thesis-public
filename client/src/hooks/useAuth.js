@@ -10,7 +10,7 @@ export default function useAuth() {
 
 
     const setUserContext = async () => {
-        return await axios.get('/auth/checkUser').then(res => {
+        return await axios.get('/api/auth/checkUser').then(res => {
             setUser(res.data.user);
             navigate('/dashboard');
         }).catch((err) => {
@@ -20,7 +20,7 @@ export default function useAuth() {
 
     const login = async (data) => {
         const {email, password} = data;
-        return axios.post('/auth/signin', {
+        return axios.post('/api/auth/signin', {
             email, password
         }).then(async () => {
             await setUserContext();
@@ -30,7 +30,7 @@ export default function useAuth() {
     }
 
     const logout = () => {
-        return axios.get('/auth/logout')
+        return axios.get('/api/auth/logout')
             .then(() => {
                 setUser(null);
                 navigate('/signin');

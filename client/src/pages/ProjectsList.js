@@ -14,12 +14,12 @@ import {
 } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import GrainIcon from '@mui/icons-material/Grain';
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import axios from "axios";
 import {Link, Outlet} from "react-router-dom";
 import Button from "@mui/material/Button";
 import AddIcon from '@mui/icons-material/Add';
-import StatusChip from "../components/StatusChip";
+import StatusChip from "../../../../../thesis-public/client/src/components/StatusChip";
 import moment from "moment/moment";
 
 const ProjectsList = () => {
@@ -27,7 +27,7 @@ const ProjectsList = () => {
     useEffect(() => {
 
         const getProjects = async () => {
-            const {data} = await axios.get('/projects/list');
+            const {data} = await axios.get('/api/projects/list');
             setProject(data.projects);
         };
         getProjects();

@@ -31,7 +31,7 @@ const TechList = ({techIds, projectId}) => {
             return undefined;
         }
         const getTechs = async () => {
-            const {data} = await axios.get('/technicians/list');
+            const {data} = await axios.get('/api/technicians/list');
             if (active) {
                 const filteredTechs = data.technicians.filter(({_id}) => !techIds.includes(_id));
                 setOptions([...filteredTechs]);
@@ -52,7 +52,7 @@ const TechList = ({techIds, projectId}) => {
 
     useEffect(() => {
         const getTechs = async () => {
-            const {data} = await axios.get('/technicians/list', {params: {techIds}});
+            const {data} = await axios.get('/api/technicians/list', {params: {techIds}});
             setTechs(data.technicians);
         };
         if (techIds.length > 0)
@@ -66,7 +66,7 @@ const TechList = ({techIds, projectId}) => {
                 techId: selectedOption._id,
                 projectId
             }
-            return axios.post('/projects/addTech', {
+            return axios.post('/api/projects/addTech', {
                 projectData
             })
         }

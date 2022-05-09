@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {
     Autocomplete,
     Box,
@@ -41,7 +41,7 @@ const ContactCreate = () => {
     }
 
     const createContact = async (contactData) => {
-        return axios.post('/invoices/contacts/create', {
+        return axios.post('/api/invoices/contacts/create', {
             contactData
         }).then(() => {
             navigate('/contacts');

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {
     Box,
     Breadcrumbs, Button, Grid,
@@ -47,7 +47,7 @@ const ProjectCreate = () => {
     }
 
     const createOffer = async (projectData) => {
-        return axios.post('/projects/create', {
+        return axios.post('/api/projects/create', {
             projectData
         }).then(() => {
             navigate('/projects');

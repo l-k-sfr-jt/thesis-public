@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from "react";
 import FileDownload from 'js-file-download';
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {
     Box,
     Breadcrumbs,
@@ -29,7 +29,7 @@ const InvoiceDetail = () => {
     const [lines, setLines] = useState([]);
 
     const getInvoice = async () => {
-        const {data} = await axios.get(`/invoices/list/${params.invoiceId}`);
+        const {data} = await axios.get(`/api/invoices/list/${params.invoiceId}`);
         setInvoice(data.response);
         setLines(data.response.lines);
     };
@@ -42,7 +42,7 @@ const InvoiceDetail = () => {
         event.preventDefault();
 
         setInvoice({...invoice, lines: lines})
-        return await axios.put(`/invoices/update/${invoice.id}`, {invoiceData: invoice})
+        return await axios.put(`/api/invoices/update/${invoice.id}`, {invoiceData: invoice})
             .then((response, err) => {
                 toggleEdit();
                 setInvoice(response.data.response);
@@ -79,7 +79,7 @@ const InvoiceDetail = () => {
     };
 
     const handleDownload = () => {
-        axios.get(`/invoices/pdf/${invoice.id}`, {responseType: 'blob'})
+        axios.get(`/api/invoices/pdf/${invoice.id}`, {responseType: 'blob'})
             .then((response) => {
                 FileDownload(response.data, `${invoice.number}.pdf`);
             })
@@ -89,7 +89,7 @@ const InvoiceDetail = () => {
     };
 
     const handleDelete = async () => {
-        return await axios.delete(`/invoices/delete/${invoice.id}`, )
+        return await axios.delete(`/api/invoices/delete/${invoice.id}`, )
             .then(() => {
                 navigate('/invoices');
             }).catch((err) => {

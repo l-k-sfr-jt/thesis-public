@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {
     Autocomplete,
     Box,
@@ -24,7 +24,7 @@ const UserCreate = () => {
 
     useEffect(() => {
         const getPositions = async () => {
-            const {data} = await axios.get(`/technicians/positions`);
+            const {data} = await axios.get(`/api/technicians/positions`);
             setPositions(data.positions);
         };
         getPositions();
@@ -59,7 +59,7 @@ const UserCreate = () => {
     }
 
     const createTechnician = async (techData) => {
-        return axios.post('/technicians/create', {
+        return axios.post('/api/technicians/create', {
             techData
         }).then(() => {
             navigate('/technicians');

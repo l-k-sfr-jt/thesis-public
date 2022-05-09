@@ -32,7 +32,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         const getProjects = async () => {
-            const {data} = await axios.get('/projects/list');
+            const {data} = await axios.get('/api/projects/list');
             setProject(data.projects);
         };
         getProjects();

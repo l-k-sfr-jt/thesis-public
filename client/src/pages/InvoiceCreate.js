@@ -1,6 +1,6 @@
 import React, {useEffect, useState, Fragment} from "react";
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {
     Autocomplete,
     Box,
@@ -74,12 +74,12 @@ const InvoiceCreate = () => {
     }, [])
 
     const getContacts = async () => {
-        const {data} = await axios.get('/invoices/contacts');
+        const {data} = await axios.get('/api/invoices/contacts');
         setContacts(data.response);
     };
 
     const createInvoice = async (invoiceData) => {
-        return axios.post('/invoices/create', {
+        return axios.post('/api/invoices/create', {
             invoiceData
         }).then(() => {
             navigate('/invoices');

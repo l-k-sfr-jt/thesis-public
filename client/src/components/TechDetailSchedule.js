@@ -25,7 +25,7 @@ const TechDetailSchedule = ({projectId}) => {
 
     useEffect(() => {
         const getTechnician = async () => {
-            const {data} = await axios.get(`/technicians/list/${selectedTech}`);
+            const {data} = await axios.get(`/api/technicians/list/${selectedTech}`);
             setTech(data.tech);
             if (data.tech.projects) {
                 const project = data.tech.projects.filter(projects => projects.projectId._id === projectId)[0];
@@ -39,7 +39,7 @@ const TechDetailSchedule = ({projectId}) => {
 
     const updateSchedule = async (timesheet) => {
         const techData = {_id: tech._id, projectId, workDays: timesheet};
-        axios.put('/technicians/update', {
+        axios.put('/api/technicians/update', {
             techData
         }).then(response => {
             setSchedue(response.data.projects[0].workDays)

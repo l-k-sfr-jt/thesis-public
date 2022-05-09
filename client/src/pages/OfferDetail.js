@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {Box, Breadcrumbs, Grid, Paper, Stack, TextField, Typography} from "@mui/material";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
@@ -23,7 +23,7 @@ const OrderDetail = () => {
     const [editorDefault, setEditorDefault] = useState(ContentState.createFromBlockArray(convertFromHTML('').contentBlocks));
 
     const getOffer = async () => {
-        const {data} = await axios.get(`/offers/list/${params.offerId}`);
+        const {data} = await axios.get(`/api/offers/list/${params.offerId}`);
         setOffer(data.offer);
         const blocksFromHTML = convertFromHTML(data.offer.offerText);
         setEditorDefault(ContentState.createFromBlockArray(
@@ -39,7 +39,7 @@ const OrderDetail = () => {
     const handleEdit = async (event) => {
         event.preventDefault();
         const data = {...offer, offerText: stateToHTML(editorState.getCurrentContent())}
-        return await axios.put(`/offers/update/${offer._id}`, {offer: data})
+        return await axios.put(`/api/offers/update/${offer._id}`, {offer: data})
             .then((data) => {
                 toggleEdit();
             }).catch((err) => {
@@ -59,7 +59,7 @@ const OrderDetail = () => {
     }
 
     const handleDelete = async () => {
-        return await axios.delete('/offers/delete', {data: {offerId: params.offerId}})
+        return await axios.delete('/api/offers/delete', {data: {offerId: params.offerId}})
             .then(() => {
                 navigate('/offers');
             }).catch((err) => {
@@ -68,7 +68,7 @@ const OrderDetail = () => {
     }
 
     const handleExport = async () => {
-        await axios.post(`/offers/export/${offer._id}`, {}, {responseType: 'blob'})
+        await axios.post(`/api/offers/export/${offer._id}`, {}, {responseType: 'blob'})
             .then((response) => {
                 FileDownload(response.data, `${offer.offerNumber}.pdf`);
             })

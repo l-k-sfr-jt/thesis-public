@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {Box, Breadcrumbs, Grid, Paper, Stack, TextField, Typography} from "@mui/material";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
@@ -24,7 +24,7 @@ const OrderDetail = () => {
     const [editorDefault, setEditorDefault] = useState(ContentState.createFromBlockArray(convertFromHTML('').contentBlocks));
 
     const getOrder = async () => {
-        const {data} = await axios.get(`/orders/list/${params.orderId}`);
+        const {data} = await axios.get(`/api/orders/list/${params.orderId}`);
         setOrder(data.order);
         const blocksFromHTML = convertFromHTML(data.order.orderText);
         setEditorDefault(ContentState.createFromBlockArray(
@@ -40,7 +40,7 @@ const OrderDetail = () => {
     const handeEdit = async (event) => {
         event.preventDefault();
         const orderData = {...order, orderText: stateToHTML(editorState.getCurrentContent())}
-        return await axios.put(`/orders/update/${order._id}`, {order: orderData})
+        return await axios.put(`/api/orders/update/${order._id}`, {order: orderData})
             .then((data) => {
                 handelToggleEdit();
             }).catch((err) => {
@@ -61,7 +61,7 @@ const OrderDetail = () => {
     }
 
     const handleDelete = async () => {
-        return await axios.delete('/orders/delete', {data: {orderId: params.orderId}})
+        return await axios.delete('/api/orders/delete', {data: {orderId: params.orderId}})
             .then(() => {
                 navigate('/orders');
             }).catch((err) => {
@@ -70,7 +70,7 @@ const OrderDetail = () => {
     }
 
     const handleExport = async () => {
-        await axios.post(`/orders/export/${order._id}`, {}, {responseType: 'blob'})
+        await axios.post(`/api/orders/export/${order._id}`, {}, {responseType: 'blob'})
             .then((response) => {
                 FileDownload(response.data, `${order.orderNumber}.pdf`);
             })

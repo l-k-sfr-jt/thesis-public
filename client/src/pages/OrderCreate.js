@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import SideBarHeader from "../components/SideBarHeader";
+import SideBarHeader from "../../../../../thesis-public/client/src/components/SideBarHeader";
 import {EditorState} from "draft-js";
 import {
     Box,
@@ -72,7 +72,7 @@ const OrderCreate = () => {
     }
 
     const createOrder = async (orderData) => {
-        return axios.post('/orders/create', {
+        return axios.post('/api/orders/create', {
             orderData
         }).then(() => {
             navigate('/orders');
