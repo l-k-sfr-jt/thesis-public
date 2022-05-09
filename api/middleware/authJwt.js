@@ -8,6 +8,23 @@ signToken = id => {
     });
 }
 
+exports.verifyToken = (req, res, next) => {
+    let token = req.cookies.jwt
+    if (!token) {
+        return res.status(403).send({
+            message: "No token provided!"
+        });
+    }
+    jwt.verify(token, config.secret, (err, decoded) => {
+        if (err) {
+            return res.status(401).send({
+                message: "Unauthorized!"
+            });
+        }
+        req.userId = decoded.id;
+        next();
+    });
+};
 
 exports.createUserToken = async(user, req, res) => {
     const jwt = signToken(user._id);
@@ -20,6 +37,7 @@ exports.createUserToken = async(user, req, res) => {
     res.cookie('jwt', jwt, {
         expires: d,
         httpOnly: true,
+        sameSite: true,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
     });
 

@@ -2,6 +2,7 @@ const express = require('express');
 const {body} = require('express-validator');
 
 const usersController = require('../controllers/users');
+const authJwt = require("../middleware/authJwt");
 
 const router = express.Router();
 
@@ -11,6 +12,7 @@ router.get('/list', usersController.getUsers);
 // POST /feed/post
 router.post(
     '/create',
+    [authJwt.verifyToken, authJwt.isAdmin],
     [
         body('firstName')
             .trim()
@@ -27,6 +29,6 @@ router.post(
     usersController.createUser
 );
 
-router.get('/list/:userId', usersController.getUser);
+router.get('/list/:userId', [authJwt.verifyToken, authJwt.isAdmin], usersController.getUser);
 
 module.exports = router;

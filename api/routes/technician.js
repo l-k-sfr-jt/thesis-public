@@ -2,11 +2,12 @@ const express = require('express');
 const {body} = require('express-validator');
 
 const technicianController = require('../controllers/technician');
+const authJwt = require("../middleware/authJwt");
 
 const router = express.Router();
 
 // GET /feed/posts
-router.get('/list', technicianController.getTechnicians);
+router.get('/list', [authJwt.verifyToken, authJwt.isAdmin], technicianController.getTechnicians);
 
 // POST /feed/post
 router.post(
@@ -15,14 +16,14 @@ router.post(
     technicianController.createTechnician
 );
 
-router.put('/update', technicianController.updateTechnician);
+router.put('/update', [authJwt.verifyToken, authJwt.isAdmin], technicianController.updateTechnician);
 
-router.delete('/delete', technicianController.deleteTechnician);
+router.delete('/delete', [authJwt.verifyToken, authJwt.isAdmin], technicianController.deleteTechnician);
 
-router.get('/list/:techId', technicianController.getTechnician);
+router.get('/list/:techId', [authJwt.verifyToken, authJwt.isAdmin], technicianController.getTechnician);
 
-router.get('/positions', technicianController.getTechnicianPositions);
+router.get('/positions', [authJwt.verifyToken, authJwt.isAdmin], technicianController.getTechnicianPositions);
 
-router.post('/positions/create', technicianController.createTechnicianPosition)
+router.post('/positions/create', [authJwt.verifyToken, authJwt.isAdmin], technicianController.createTechnicianPosition)
 
 module.exports = router;
